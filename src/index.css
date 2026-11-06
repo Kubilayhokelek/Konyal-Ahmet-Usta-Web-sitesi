@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --color-brand-green: #277E39;
+  --color-brand-dark: #1A3620;
+  --color-brand-cream: #F8F5ED;
+  --color-brand-amber: #D97706;
+  --color-brand-amber-dark: #B45309;
+  --color-brand-neutral: #6B746D;
+}
+
+@keyframes steamRise {
+  0% {
+    transform: translateY(0) scaleX(1) scaleY(1);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.65;
+  }
+  50% {
+    transform: translateY(-40px) scaleX(1.3) scaleY(1.2);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-90px) scaleX(1.8) scaleY(1.6);
+    opacity: 0;
+  }
+}
+
+.animate-steam-1 {
+  animation: steamRise 3.2s infinite ease-out;
+}
+.animate-steam-2 {
+  animation: steamRise 3.8s infinite 0.7s ease-out;
+}
+.animate-steam-3 {
+  animation: steamRise 4.2s infinite 1.4s ease-out;
+}
+
+/* Custom subtle scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1ede3;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd3cc;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9ea89f;
+}
+
+/* Print styles for thermal receipts */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #thermal-receipt, #thermal-receipt * {
+    visibility: visible;
+  }
+  #thermal-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80mm;
+  }
+}

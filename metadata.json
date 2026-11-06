@@ -1,0 +1,6 @@
+{
+  "name": "Konyalı Ahmet Usta – Online Sipariş & Restoran Yönetimi",
+  "description": "Geleneksel taş fırın Konya lezzetleri, meşe odununda etli ekmek, bıçakarası, fırın kebabı ve online sipariş sistemi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

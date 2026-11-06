@@ -1,0 +1,509 @@
+{
+  "settings": {
+    "restaurantName": "Konyalı Ahmet Usta",
+    "logoUrl": "/logo.png",
+    "phone": "0532 340 23 42",
+    "address": "Emek Mahallesi Bişkek Caddesi, Eski 8. Cadde No: 60, 06490 Çankaya/Ankara",
+    "city": "Ankara",
+    "email": "info@konyaliahmetusta.com",
+    "notificationEmail": "siparis@konyaliahmetusta.com",
+    "workingHours": "11.00 - 22.00",
+    "isOpen": true,
+    "allowDelivery": true,
+    "allowTakeaway": true,
+    "minOrderAmount": 150,
+    "deliveryFee": 0,
+    "freeDeliveryThreshold": 300,
+    "heroTitle": "Konya'nın Lezzeti, Sofranızda!",
+    "heroSubtitle": "Özenle hazırlanan lezzetlerimiz, geleneksel Konya mutfağının eşsiz tadıyla şimdi siparişinizde.",
+    "aboutTitle": "Geleneksel Konya Lezzeti",
+    "aboutText": "Konyalı Ahmet Usta, Konya'nın asırlık taş fırın geleneğini ve meşe odunu ateşinde pişen eşsiz etli ekmek mirasını sofranıza taşır. İncecik dinlendirilmiş hamurumuz, yerli besi etlerimiz ve asırlık Selçuklu lezzet mirasımızla her siparişi aynı lezzet ve tazelikte hazırlıyoruz.",
+    "aboutSubtext": "Etli ekmeğin hamurundan iç harcına, fırının harından dilimleme ustalığına kadar her aşamada özüne sadık kalarak gerçek lezzeti sunuyoruz. Siparişiniz verildiği an hamurumuz açılır, taş fırına sürülür ve sıcaklığı muhafaza edilerek adresinize ulaştırılır.",
+    "aboutImageUrl": "/uploads/firin_kebabi.jpg",
+    "instagramUrl": "https://www.instagram.com/konyaliahmetustaankara/",
+    "mapsUrl": "https://maps.google.com/?q=Emek+Mahallesi+Biskek+Caddesi+Eski+8+Cadde+No+60+06490+Cankaya+Ankara",
+    "uberEatsUrl": "https://tgoyemek.com/restoranlar/310664?utm_source=google_food_ordering&utm_medium=organic&utm_campaign=CM2826747-search-free-nonbrand-google-pas_e-tygo_ios-and-web_acq_Global&utm_term=pickup#kebaplar",
+    "yemeksepetiUrl": "https://www.yemeksepeti.com/restaurant/hzr4/konyali-ahmet-usta-hzr4?utm_campaign=google_reserve_place_order_action_CH-SEO_",
+    "closedMessage": "Şu anda fırınımız kapalıdır. Sipariş kabul saatlerimiz: 11.00 - 22.00."
+  },
+  "categories": [
+    {
+      "id": "cat-etli",
+      "name": "Etli Ekmekler",
+      "order": 1,
+      "isActive": true,
+      "icon": "local_pizza"
+    },
+    {
+      "id": "cat-pide",
+      "name": "Pideler",
+      "order": 2,
+      "isActive": true,
+      "icon": "bakery_dining"
+    },
+    {
+      "id": "cat-lahmacun",
+      "name": "Lahmacun",
+      "order": 3,
+      "isActive": true,
+      "icon": "dinner_dining"
+    },
+    {
+      "id": "cat-kebap",
+      "name": "Kebap ve Izgara",
+      "order": 4,
+      "isActive": true,
+      "icon": "outdoor_grill"
+    },
+    {
+      "id": "cat-corba",
+      "name": "Çorbalar",
+      "order": 5,
+      "isActive": true,
+      "icon": "soup_kitchen"
+    },
+    {
+      "id": "cat-tatli",
+      "name": "Tatlılar",
+      "order": 6,
+      "isActive": true,
+      "icon": "cake"
+    },
+    {
+      "id": "cat-icecek",
+      "name": "İçecekler",
+      "order": 7,
+      "isActive": true,
+      "icon": "local_drink"
+    },
+    {
+      "id": "cat-diger",
+      "name": "Diğer Ürünler",
+      "order": 8,
+      "isActive": true,
+      "icon": "lunch_dining"
+    }
+  ],
+  "products": [
+    {
+      "id": "prod-etli-ekmek",
+      "name": "Konya Etli Ekmek (180 cm)",
+      "categoryId": "cat-etli",
+      "categoryName": "Etli Ekmekler",
+      "price": 230,
+      "description": "Özel dinlendirilmiş incecik çıtır hamur üzerinde zırhta çekilmiş yerli besi dana kaburga kıyması, taze domates ve yeşil biber ile meşe odunu taş fırınında pişirilen tescilli Konya lezzeti.",
+      "imageUrl": "/uploads/etli_ekmek.jpg",
+      "isFeatured": true,
+      "isActive": true,
+      "portionOptions": [
+        {
+          "name": "Tek Hamur (1 Porsiyon)",
+          "priceDiff": 0
+        },
+        {
+          "name": "1.5 Porsiyon (270 cm)",
+          "priceDiff": 110
+        },
+        {
+          "name": "Duble Porsiyon (360 cm)",
+          "priceDiff": 210
+        }
+      ],
+      "spicyOption": true,
+      "preparationTime": "15-20 dk"
+    },
+    {
+      "id": "prod-bicakarasi",
+      "name": "Özel Bıçakarası Pide",
+      "categoryId": "cat-etli",
+      "categoryName": "Etli Ekmekler",
+      "price": 280,
+      "description": "Makineden geçirilmeden çift bıçak arasında incecik doğranmış dinlendirilmiş dana bonfile ve antrikot eti, taze yeşil biber, küp domates ve hakiki yayık tereyağı ile taş fırında nar gibi kızartılır.",
+      "imageUrl": "/uploads/bicakarasi_pide.jpg",
+      "isFeatured": true,
+      "isActive": true,
+      "portionOptions": [
+        {
+          "name": "Tek Porsiyon",
+          "priceDiff": 0
+        },
+        {
+          "name": "1.5 Porsiyon",
+          "priceDiff": 130
+        }
+      ],
+      "spicyOption": true,
+      "preparationTime": "15-20 dk"
+    },
+    {
+      "id": "prod-firin-kebabi",
+      "name": "Konya Fırın Kebabı (200 gr)",
+      "categoryId": "cat-kebap",
+      "categoryName": "Kebap ve Izgara",
+      "price": 440,
+      "description": "Taş fırında bakır kazanda 6 saat boyunca kendi suyunda ve meşe odunu közünde ağır ağır pişen ağızda dağılan lokum kuzu eti; sıcak tırnak pidesi, sumaklı kırmızı soğan ve közlenmiş biber eşliğinde.",
+      "imageUrl": "/uploads/firin_kebabi.jpg",
+      "isFeatured": true,
+      "isActive": true,
+      "portionOptions": [
+        {
+          "name": "200 gr Porsiyon",
+          "priceDiff": 0
+        },
+        {
+          "name": "300 gr Porsiyon",
+          "priceDiff": 210
+        },
+        {
+          "name": "500 gr (Yarım Kilo)",
+          "priceDiff": 580
+        }
+      ],
+      "spicyOption": false,
+      "preparationTime": "10-15 dk"
+    },
+    {
+      "id": "prod-mevlana",
+      "name": "Mevlana Pidesi (Peynirli & Kıymalı)",
+      "categoryId": "cat-pide",
+      "categoryName": "Pideler",
+      "price": 250,
+      "description": "Geleneksel Konya küflü/tulum peyniri, tam yağlı taze kaşar peyniri ve özel sebzeli dana kıymasının incecik çıtır hamur üzerinde taş fırında muazzam uyumu.",
+      "imageUrl": "/uploads/mevlana_pidesi.jpg",
+      "isFeatured": true,
+      "isActive": true,
+      "portionOptions": [
+        {
+          "name": "Tek Porsiyon",
+          "priceDiff": 0
+        },
+        {
+          "name": "1.5 Porsiyon",
+          "priceDiff": 115
+        }
+      ],
+      "spicyOption": false,
+      "preparationTime": "15-20 dk"
+    },
+    {
+      "id": "prod-sac-arasi",
+      "name": "Kaymaklı Sac Arası Tatlısı",
+      "categoryId": "cat-tatli",
+      "categoryName": "Tatlılar",
+      "price": 160,
+      "description": "El açması tel tel incecik çıtır yufkanın tereyağıyla sac üzerinde nar gibi kızartılıp, hakiki manda kaymağı ve bol boz Antep fıstığı ile servis edildiği asırlık Konya tatlısı.",
+      "imageUrl": "/uploads/sac_arasi_tatlisi.jpg",
+      "isFeatured": true,
+      "isActive": true,
+      "preparationTime": "10 dk"
+    },
+    {
+      "id": "prod-lahmacun",
+      "name": "Taş Fırın Çıtır Lahmacun",
+      "categoryId": "cat-lahmacun",
+      "categoryName": "Lahmacun",
+      "price": 110,
+      "description": "Zırh kıyması, taze kapya biber, domates, maydanoz ve özel baharat harcıyla meşe odunu ateşinde çıtır çıtır pişirilen, bol yeşillik ve limonla servis edilen taş fırın lahmacun.",
+      "imageUrl": "/uploads/tas_firin_lahmacun.jpg",
+      "isFeatured": false,
+      "isActive": true,
+      "spicyOption": true,
+      "preparationTime": "12-15 dk"
+    },
+    {
+      "id": "prod-bamya-corbasi",
+      "name": "Geleneksel Konya Bamya Çorbası",
+      "categoryId": "cat-corba",
+      "categoryName": "Çorbalar",
+      "price": 150,
+      "description": "Özenle seçilmiş kurutulmuş Amasya çiçek bamyası, minik kuşbaşı dana eti, taze limon suyu ve kemik suyunda ağır ateşte pişirilen meşhur ekşili Konya başlangıç çorbası.",
+      "imageUrl": "/uploads/bamya_corbasi.jpg",
+      "isFeatured": false,
+      "isActive": true,
+      "preparationTime": "5-10 dk"
+    },
+    {
+      "id": "prod-kasarli-pide",
+      "name": "Tereyağlı Kaşarlı Pide",
+      "categoryId": "cat-pide",
+      "categoryName": "Pideler",
+      "price": 220,
+      "description": "İnce açılmış taş fırın hamuru üzerinde bol Konya kaşar peyniri ve fırın çıkışında sürülen hakiki yayık tereyağı ile sıcacık uzayan lezzet.",
+      "imageUrl": "/uploads/mevlana_pidesi.jpg",
+      "isFeatured": false,
+      "isActive": true,
+      "preparationTime": "15 dk"
+    },
+    {
+      "id": "prod-yayik-ayran",
+      "name": "Köpüklü Yayık Ayran (330 ml)",
+      "categoryId": "cat-icecek",
+      "categoryName": "İçecekler",
+      "price": 35,
+      "description": "Tam yağlı doğal koyun ve inek yoğurdundan geleneksel yayık usulü çalkalanarak hazırlanan, taş fırın lezzetlerinin vazgeçilmezi bol köpüklü soğuk ayran.",
+      "imageUrl": "https://images.unsplash.com/photo-1556881286-fc6915169721?auto=format&fit=crop&w=800&q=80",
+      "isFeatured": false,
+      "isActive": true,
+      "preparationTime": "Anında"
+    },
+    {
+      "id": "prod-salgam",
+      "name": "Özel Acılı Şalgam Suyu (330 ml)",
+      "categoryId": "cat-icecek",
+      "categoryName": "İçecekler",
+      "price": 35,
+      "description": "Geleneksel fermantasyon yöntemiyle siyah havuç ve bulgur mayasından üretilen, etli ekmek ve kebapların yanına çok yakışan buz gibi şalgam suyu.",
+      "imageUrl": "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
+      "isFeatured": false,
+      "isActive": true,
+      "preparationTime": "Anında"
+    },
+    {
+      "id": "prod-mesrubat",
+      "name": "Kutu İçecekler (330 ml)",
+      "categoryId": "cat-icecek",
+      "categoryName": "İçecekler",
+      "price": 45,
+      "description": "Coca-Cola, Coca-Cola Zero, Fanta, Sprite veya Fuse Tea soğuk kutu meşrubat çeşitleri (Sipariş notunda tercihinizi belirtebilirsiniz).",
+      "imageUrl": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80",
+      "isFeatured": false,
+      "isActive": true,
+      "preparationTime": "Anında"
+    },
+    {
+      "id": "prod-sutlac",
+      "name": "Taş Fırın Güveç Sütlaç",
+      "categoryId": "cat-tatli",
+      "categoryName": "Tatlılar",
+      "price": 120,
+      "description": "Günlük doğal köy sütü ile toprak güveçte hazırlanan, taş fırında üzeri nar gibi karamelize edilerek fındık parçacıklarıyla sunulan fırın sütlaç.",
+      "imageUrl": "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=800&q=80",
+      "isFeatured": false,
+      "isActive": true,
+      "preparationTime": "Anında"
+    }
+  ],
+  "orders": [
+    {
+      "id": "KNY-84920",
+      "customerName": "Mehmet Demir",
+      "customerPhone": "0532 555 42 10",
+      "deliveryType": "delivery",
+      "deliveryAddress": "Nalçacı Cad. Vatan Apt. No:14 D:6, Selçuklu / Konya",
+      "addressDirections": "Vatan Eczanesi üstü 3. kat",
+      "orderNote": "Limonu bol olsun, acı biberler közlensin lütfen.",
+      "items": [
+        {
+          "productId": "prod-etli-ekmek",
+          "name": "Konya Etli Ekmek (180 cm)",
+          "price": 230,
+          "quantity": 2,
+          "subtotal": 460
+        },
+        {
+          "productId": "prod-bicakarasi",
+          "name": "Özel Bıçakarası Pide",
+          "price": 280,
+          "quantity": 1,
+          "subtotal": 280
+        },
+        {
+          "productId": "prod-yayik-ayran",
+          "name": "Köpüklü Yayık Ayran (330 ml)",
+          "price": 35,
+          "quantity": 2,
+          "subtotal": 70
+        }
+      ],
+      "subtotal": 810,
+      "deliveryFee": 0,
+      "total": 810,
+      "paymentMethod": "cash_delivery",
+      "paymentStatus": "unpaid",
+      "status": "done",
+      "createdAt": "2026-11-06T18:58:21.807Z",
+      "statusHistory": [
+        {
+          "status": "new",
+          "timestamp": "2026-11-06T18:58:21.807Z",
+          "note": "Sipariş müşteri tarafından oluşturuldu."
+        },
+        {
+          "status": "cooking",
+          "timestamp": "2026-11-06T19:10:44.524Z",
+          "note": "Mutfak fırınına verildi."
+        },
+        {
+          "status": "delivery",
+          "timestamp": "2026-11-06T19:10:45.923Z",
+          "note": "Kurye ile yola çıktı."
+        },
+        {
+          "status": "done",
+          "timestamp": "2026-11-06T19:10:53.768Z",
+          "note": "Müşteriye teslim edildi."
+        }
+      ]
+    },
+    {
+      "id": "KNY-84918",
+      "customerName": "Ayşe Yılmaz",
+      "customerPhone": "0541 230 19 88",
+      "deliveryType": "delivery",
+      "deliveryAddress": "Meram Yeni Yol Cad. Zambak Konakları B Blok K:3, Meram / Konya",
+      "addressDirections": "Güvenlikten sonra sağdaki ilk blok",
+      "orderNote": "Zil bozuk lütfen gelince arayın.",
+      "items": [
+        {
+          "productId": "prod-mevlana",
+          "name": "Mevlana Pidesi (Peynirli & Kıymalı)",
+          "price": 250,
+          "quantity": 1,
+          "subtotal": 250
+        },
+        {
+          "productId": "prod-firin-kebabi",
+          "name": "Konya Fırın Kebabı (200 gr)",
+          "price": 440,
+          "quantity": 1,
+          "subtotal": 440
+        },
+        {
+          "productId": "prod-sac-arasi",
+          "name": "Kaymaklı Sac Arası Tatlısı",
+          "price": 160,
+          "quantity": 1,
+          "subtotal": 160
+        }
+      ],
+      "subtotal": 850,
+      "deliveryFee": 0,
+      "total": 850,
+      "paymentMethod": "cash_delivery",
+      "paymentStatus": "unpaid",
+      "status": "done",
+      "createdAt": "2026-11-06T18:46:21.807Z",
+      "statusHistory": [
+        {
+          "status": "new",
+          "timestamp": "2026-11-06T18:46:21.807Z"
+        },
+        {
+          "status": "cooking",
+          "timestamp": "2026-11-06T18:49:21.807Z",
+          "note": "Mutfak taş fırınına verildi."
+        },
+        {
+          "status": "delivery",
+          "timestamp": "2026-11-06T19:10:48.908Z",
+          "note": "Kurye ile yola çıktı."
+        },
+        {
+          "status": "done",
+          "timestamp": "2026-11-06T19:10:51.366Z",
+          "note": "Müşteriye teslim edildi."
+        }
+      ]
+    },
+    {
+      "id": "KNY-84912",
+      "customerName": "Osman Kara",
+      "customerPhone": "0505 889 44 21",
+      "deliveryType": "delivery",
+      "deliveryAddress": "Şefik Can Cad. Erguvan Sitesi C Blok No:8, Selçuklu / Konya",
+      "items": [
+        {
+          "productId": "prod-etli-ekmek",
+          "name": "Konya Etli Ekmek (180 cm)",
+          "price": 230,
+          "quantity": 3,
+          "subtotal": 690
+        },
+        {
+          "productId": "prod-bamya-corbasi",
+          "name": "Geleneksel Konya Bamya Çorbası",
+          "price": 150,
+          "quantity": 1,
+          "subtotal": 150
+        },
+        {
+          "productId": "prod-salgam",
+          "name": "Özel Acılı Şalgam Suyu (330 ml)",
+          "price": 35,
+          "quantity": 1,
+          "subtotal": 35
+        }
+      ],
+      "subtotal": 875,
+      "deliveryFee": 0,
+      "total": 875,
+      "paymentMethod": "cash_delivery",
+      "paymentStatus": "unpaid",
+      "status": "delivery",
+      "createdAt": "2026-11-06T18:30:21.807Z",
+      "statusHistory": [
+        {
+          "status": "new",
+          "timestamp": "2026-11-06T18:30:21.807Z"
+        },
+        {
+          "status": "cooking",
+          "timestamp": "2026-11-06T18:39:21.807Z"
+        },
+        {
+          "status": "delivery",
+          "timestamp": "2026-11-06T18:54:21.807Z",
+          "note": "Kurye Ali Usta yola çıktı."
+        }
+      ]
+    },
+    {
+      "id": "KNY-84905",
+      "customerName": "Fatma Şahin",
+      "customerPhone": "0533 112 90 04",
+      "deliveryType": "delivery",
+      "deliveryAddress": "Kerkük Cad. Çiğdem Apt. No:5, Selçuklu / Konya",
+      "items": [
+        {
+          "productId": "prod-etli-ekmek",
+          "name": "Konya Etli Ekmek (180 cm)",
+          "price": 230,
+          "quantity": 1,
+          "subtotal": 230
+        },
+        {
+          "productId": "prod-yayik-ayran",
+          "name": "Köpüklü Yayık Ayran (330 ml)",
+          "price": 35,
+          "quantity": 1,
+          "subtotal": 35
+        }
+      ],
+      "subtotal": 265,
+      "deliveryFee": 0,
+      "total": 265,
+      "paymentMethod": "cash_delivery",
+      "paymentStatus": "paid",
+      "status": "done",
+      "createdAt": "2026-11-06T17:49:21.807Z",
+      "statusHistory": [
+        {
+          "status": "new",
+          "timestamp": "2026-11-06T17:49:21.807Z"
+        },
+        {
+          "status": "done",
+          "timestamp": "2026-11-06T18:34:21.807Z",
+          "note": "Teslim edildi ve nakit tahsil edildi."
+        }
+      ]
+    }
+  ],
+  "emailLogs": [],
+  "admin": {
+    "username": "admin",
+    "passwordPlain": "ahmetusta42",
+    "name": "Ahmet Usta",
+    "role": "Baş Usta / Yönetici"
+  }
+}
