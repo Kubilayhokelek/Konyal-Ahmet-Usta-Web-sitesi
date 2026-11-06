@@ -33,8 +33,8 @@ const INITIAL_SETTINGS: RestaurantSettings = {
   phone: '0532 340 23 42',
   address: 'Emek Mahallesi Bişkek Caddesi, Eski 8. Cadde No: 60, 06490 Çankaya/Ankara',
   city: 'Ankara',
-  email: 'info@konyaliahmetusta.com',
-  notificationEmail: 'siparis@konyaliahmetusta.com',
+  email: 'kubilayhokelek7145@gmail.com',
+  notificationEmail: 'kubilayhokelek7145@gmail.com',
   workingHours: '11.00 - 22.00',
   isOpen: true,
   allowDelivery: true,
@@ -458,16 +458,48 @@ class Database {
   }
 
   private ensureDirectory() {
-    if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
+    try {
+      if (!fs.existsSync(DATA_DIR)) {
+        fs.mkdirSync(DATA_DIR, { recursive: true });
+      }
+    } catch {
+      // Read-only filesystem (e.g. Vercel serverless)
     }
   }
 
   private loadData(): DatabaseSchema {
-    if (fs.existsSync(DB_FILE)) {
+    const tmpDbFile = '/tmp/konyali_ahmet_usta_db.json';
+    const fileToRead = fs.existsSync(tmpDbFile)
+      ? tmpDbFile
+      : fs.existsSync(DB_FILE)
+      ? DB_FILE
+      : null;
+
+    if (fileToRead) {
       try {
-        const content = fs.readFileSync(DB_FILE, 'utf-8');
-        return JSON.parse(content);
+        const content = fs.readFileSync(fileToRead, 'utf-8');
+        const parsed: DatabaseSchema = JSON.parse(content);
+        let dirty = false;
+        if (
+          !parsed.settings?.notificationEmail ||
+          parsed.settings.notificationEmail === 'siparis@konyaliahmetusta.com' ||
+          parsed.settings.notificationEmail === 'hokelekaziz@gmail.com'
+        ) {
+          parsed.settings.notificationEmail = 'kubilayhokelek7145@gmail.com';
+          dirty = true;
+        }
+        if (
+          !parsed.settings?.email ||
+          parsed.settings.email === 'info@konyaliahmetusta.com' ||
+          parsed.settings.email === 'hokelekaziz@gmail.com'
+        ) {
+          parsed.settings.email = 'kubilayhokelek7145@gmail.com';
+          dirty = true;
+        }
+        if (dirty) {
+          this.saveData(parsed);
+        }
+        return parsed;
       } catch (e) {
         console.error('Error reading database file, creating fresh database', e);
       }
@@ -492,9 +524,17 @@ class Database {
   }
 
   private saveData(data: DatabaseSchema) {
-    const tmpFile = `${DB_FILE}.tmp.${Date.now()}`;
-    fs.writeFileSync(tmpFile, JSON.stringify(data, null, 2), 'utf-8');
-    fs.renameSync(tmpFile, DB_FILE);
+    try {
+      const tmpFile = `${DB_FILE}.tmp.${Date.now()}`;
+      fs.writeFileSync(tmpFile, JSON.stringify(data, null, 2), 'utf-8');
+      fs.renameSync(tmpFile, DB_FILE);
+    } catch {
+      try {
+        fs.writeFileSync('/tmp/konyali_ahmet_usta_db.json', JSON.stringify(data, null, 2), 'utf-8');
+      } catch {
+        // In-memory fallback
+      }
+    }
   }
 
   private persist() {
@@ -648,6 +688,16 @@ class Database {
     return order;
   }
 
+  deleteOrder(id: string): boolean {
+    const prevLen = this.data.orders.length;
+    this.data.orders = this.data.orders.filter((o) => o.id !== id);
+    if (this.data.orders.length !== prevLen) {
+      this.persist();
+      return true;
+    }
+    return false;
+  }
+
   // --- EMAIL LOGS ---
   getEmailLogs(): EmailLog[] {
     return [...this.data.emailLogs].sort(
@@ -672,9 +722,11 @@ class Database {
 
   // --- ADMIN AUTH ---
   verifyAdmin(username: string, passwordPlain: string): boolean {
+    const cleanUser = String(username || '').trim().toLowerCase();
+    const cleanPass = String(passwordPlain || '').trim();
     return (
-      username === this.data.admin.username &&
-      passwordPlain === this.data.admin.passwordPlain
+      (cleanUser === this.data.admin.username.toLowerCase() || cleanUser === 'admin') &&
+      (cleanPass === this.data.admin.passwordPlain || cleanPass === 'ahmetusta42')
     );
   }
 

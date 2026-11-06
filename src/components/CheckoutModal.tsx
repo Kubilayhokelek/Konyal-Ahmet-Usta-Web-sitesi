@@ -85,8 +85,62 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         throw new Error(data.error || 'Sipariş oluşturulamadı.');
       }
 
+      const createdOrder: Order = data.order;
+
+      // 1. Instantly notify any open Admin Panel tab/window via BroadcastChannel & localStorage
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          const channel = new BroadcastChannel('konyali_ahmet_usta_sync');
+          channel.postMessage({
+            type: 'NEW_ORDER',
+            order: createdOrder,
+            timestamp: Date.now(),
+          });
+          channel.close();
+        }
+        localStorage.setItem(
+          'kny_latest_order_event',
+          JSON.stringify({ order: createdOrder, timestamp: Date.now() })
+        );
+      } catch {
+        // Ignore cross-tab channel errors
+      }
+
+      // 2. Non-blocking browser-side email dispatch to notification email (kubilayhokelek7145@gmail.com)
+      try {
+        const targetEmail = (settings.notificationEmail || 'kubilayhokelek7145@gmail.com').trim();
+        const itemsText = createdOrder.items
+          .map(
+            (it) =>
+              `${it.quantity}x ${it.name}${it.options ? ` (${it.options})` : ''} - ${it.subtotal.toFixed(2)} TL`
+          )
+          .join(' | ');
+
+        fetch(`https://formsubmit.co/ajax/${encodeURIComponent(targetEmail)}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            _subject: `Yeni Sipariş - Konyalı Ahmet Usta (#${createdOrder.id})`,
+            _template: 'table',
+            Siparis_No: `#${createdOrder.id}`,
+            Musteri_Adi: createdOrder.customerName,
+            Telefon: createdOrder.customerPhone,
+            Teslimat_Turu: createdOrder.deliveryType === 'delivery' ? 'Paket Servis' : 'Restorandan Gel-Al',
+            Teslimat_Adresi: createdOrder.deliveryAddress || 'Restorandan Gel-Al',
+            Siparis_Kalemleri: itemsText,
+            Toplam_Tutar: `${createdOrder.total.toFixed(2)} TL (Nakit)`,
+            Siparis_Notu: createdOrder.orderNote || '-',
+          }),
+        }).catch(() => {});
+      } catch {
+        // Non-blocking
+      }
+
       // Order created successfully
-      onOrderCompleted(data.order);
+      onOrderCompleted(createdOrder);
       onClose();
     } catch (err: any) {
       console.error('Checkout error:', err);

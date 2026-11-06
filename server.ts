@@ -238,6 +238,14 @@ app.patch('/api/admin/orders/:id/payment', requireAdmin, (req, res) => {
   res.json({ success: true, order: updated });
 });
 
+app.delete('/api/admin/orders/:id', requireAdmin, (req, res) => {
+  const success = db.deleteOrder(req.params.id);
+  if (!success) {
+    return res.status(404).json({ error: 'Sipariş bulunamadı.' });
+  }
+  res.json({ success: true, message: 'Sipariş silindi.' });
+});
+
 // -----------------------------------------------------------------------------
 // ADMIN PRODUCTS MANAGEMENT
 // -----------------------------------------------------------------------------
@@ -371,16 +379,20 @@ app.put('/api/admin/settings', requireAdmin, (req, res) => {
 app.post('/api/admin/settings/test-email', requireAdmin, async (req, res) => {
   const { email } = req.body;
   const settings = db.getSettings();
-  const targetEmail = email || settings.notificationEmail;
+  const targetEmail = (email || settings.notificationEmail || 'kubilayhokelek7145@gmail.com').trim();
 
-  // Create a mock order to test email rendering
+  if (email && email.trim() && email.trim() !== settings.notificationEmail) {
+    db.updateSettings({ notificationEmail: email.trim() });
+  }
+
+  // Create a test order to test email rendering and notification
   const testOrder: Order = {
     id: `TEST-${Math.floor(1000 + Math.random() * 9000)}`,
-    customerName: 'Test Müşteri (Usta Testi)',
-    customerPhone: '0532 000 00 00',
+    customerName: 'Test Müşteri (Ahmet Usta Bildirim Testi)',
+    customerPhone: '0532 340 23 42',
     deliveryType: 'delivery',
-    deliveryAddress: 'Meram Fırın Şubesi Test Adresi No:1',
-    orderNote: 'Bu bir sistem ve e-posta şablon testidir.',
+    deliveryAddress: 'Emek Mahallesi Bişkek Caddesi, Eski 8. Cadde No: 60, Çankaya/Ankara',
+    orderNote: 'Bu bir sipariş ve e-posta bildirim sistemi testidir.',
     items: [
       {
         productId: 'prod-etli-ekmek',
@@ -418,6 +430,8 @@ app.post('/api/admin/settings/test-email', requireAdmin, async (req, res) => {
     success: result.success,
     mode: result.mode,
     recipient: targetEmail,
+    emailLog: result.emailLog,
+    testOrder,
     error: result.error,
   });
 });
@@ -435,11 +449,38 @@ app.post('/api/admin/email-logs/:id/resend', requireAdmin, async (req, res) => {
   const log = logs.find((l) => l.id === req.params.id);
   if (!log) return res.status(404).json({ error: 'E-posta kaydı bulunamadı.' });
 
-  const order = db.getOrderById(log.orderId);
-  if (!order) return res.status(404).json({ error: 'Sipariş kaydı bulunamadı.' });
+  const order = db.getOrderById(log.orderId) || {
+    id: log.orderId,
+    customerName: 'Müşteri Siparişi',
+    customerPhone: '0532 340 23 42',
+    deliveryType: 'delivery' as const,
+    deliveryAddress: 'Çankaya / Ankara',
+    items: [
+      {
+        productId: 'prod-etli-ekmek',
+        name: 'Konya Etli Ekmek',
+        price: 230,
+        quantity: 1,
+        subtotal: 230,
+      },
+    ],
+    subtotal: 230,
+    deliveryFee: 0,
+    total: 230,
+    paymentMethod: 'cash_delivery' as const,
+    paymentStatus: 'unpaid' as const,
+    status: 'new' as const,
+    createdAt: new Date().toISOString(),
+    statusHistory: [],
+  };
 
   const result = await sendOrderNotificationEmail(order, log.recipient);
-  res.json({ success: result.success, mode: result.mode, error: result.error });
+  res.json({
+    success: result.success,
+    mode: result.mode,
+    emailLog: result.emailLog,
+    error: result.error,
+  });
 });
 
 // -----------------------------------------------------------------------------
