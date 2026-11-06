@@ -20,6 +20,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [websiteUrl, setWebsiteUrl] = useState('');
   const [deliveryType, setDeliveryType] = useState<DeliveryType>('delivery');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [addressDirections, setAddressDirections] = useState('');
@@ -48,6 +50,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       return;
     }
 
+    if (customerEmail && customerEmail.trim().length > 0) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(customerEmail.trim())) {
+        setErrorMessage('Lütfen geçerli bir e-posta adresi giriniz.');
+        return;
+      }
+    }
+
     if (deliveryType === 'delivery' && (!deliveryAddress || deliveryAddress.trim().length < 5)) {
       setErrorMessage('Paket servis için açık teslimat adresinizi giriniz.');
       return;
@@ -70,12 +80,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         body: JSON.stringify({
           customerName: customerName.trim(),
           customerPhone: customerPhone.trim(),
+          customerEmail: customerEmail.trim() || undefined,
           deliveryType,
           deliveryAddress: deliveryType === 'delivery' ? deliveryAddress.trim() : '',
           addressDirections: addressDirections.trim(),
           orderNote: orderNote.trim(),
           paymentMethod: deliveryType === 'delivery' ? 'cash_delivery' : 'cash_takeaway',
           items: itemsPayload,
+          websiteUrl,
         }),
       });
 
@@ -235,7 +247,19 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </div>
           </div>
 
-          {/* 2. Customer Name & Phone */}
+          {/* Honeypot field against spam bots */}
+          <input
+            type="text"
+            name="website_url"
+            value={websiteUrl}
+            onChange={(e) => setWebsiteUrl(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="hidden"
+          />
+
+          {/* 2. Customer Name, Phone & Email */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-bold text-[#1A3620] uppercase tracking-wider">
@@ -262,6 +286,19 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 onChange={(e) => setCustomerPhone(e.target.value)}
                 placeholder="0532 555 42 10"
                 className="px-4 py-2.5 rounded-xl border border-[#1A3620]/20 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#277E39]"
+              />
+            </div>
+
+            <div className="sm:col-span-2 flex flex-col gap-1.5">
+              <label className="text-xs font-bold text-[#1A3620] uppercase tracking-wider">
+                E-Posta Adresiniz (Otomatik Sipariş Özeti & Bilgilendirme İçin)
+              </label>
+              <input
+                type="email"
+                value={customerEmail}
+                onChange={(e) => setCustomerEmail(e.target.value)}
+                placeholder="ornek@gmail.com"
+                className="px-4 py-2.5 rounded-xl border border-[#1A3620]/20 text-sm focus:outline-none focus:ring-2 focus:ring-[#277E39]"
               />
             </div>
           </div>

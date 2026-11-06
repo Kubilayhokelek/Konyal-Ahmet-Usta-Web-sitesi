@@ -22,15 +22,18 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({ order, onC
             <span className="material-symbols-outlined text-[36px]">check</span>
           </div>
 
-          <span className="text-xs font-bold text-[#CDFFCB] uppercase tracking-widest">
-            Siparişiniz Başarıyla Alındı!
-          </span>
-          <h2 className="font-serif text-3xl font-bold mt-1">Afiyet Olsun!</h2>
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold mt-1">
+            Siparişiniz başarıyla alındı.
+          </h2>
 
           {/* Order ID Pill */}
-          <div className="mt-4 px-4 py-1.5 rounded-full bg-white/15 border border-white/20 text-[#ffdcc3] font-mono text-base font-extrabold tracking-wider">
-            #{order.id}
+          <div className="mt-3 px-5 py-2 rounded-full bg-white/15 border border-white/20 text-[#ffdcc3] font-mono text-base font-extrabold tracking-wider">
+            Sipariş numaranız: #{order.id}
           </div>
+
+          <p className="text-xs sm:text-sm text-[#CDFFCB] font-medium mt-3">
+            En kısa sürede sizinle iletişime geçeceğiz.
+          </p>
         </div>
 
         {/* Status Timeline */}
@@ -75,6 +78,12 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({ order, onC
               <span className="text-[#6B746D]">Telefon:</span>
               <span className="font-mono font-bold">{order.customerPhone}</span>
             </div>
+            {order.customerEmail && (
+              <div className="flex justify-between">
+                <span className="text-[#6B746D]">E-Posta:</span>
+                <span className="font-medium text-[#151D18]">{order.customerEmail}</span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span className="text-[#6B746D]">Teslimat Türü:</span>
               <span className="font-bold text-[#277E39]">

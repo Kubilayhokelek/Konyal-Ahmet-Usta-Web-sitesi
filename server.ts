@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { db } from './src/server/db.js';
 import {
   calculateOrderPricing,
+  checkOrderRateLimit,
   generateOrderNumber,
   validateCustomerInfo,
 } from './src/server/orderLogic.js';
@@ -79,25 +80,39 @@ app.get('/api/public/bootstrap', (_req, res) => {
   });
 });
 
-// 2. Submit Order: Server-side validation, price integrity check, and email notification
+// 2. Submit Order: Server-side validation, price integrity check, spam protection, and Resend email notification
 app.post('/api/orders', async (req, res) => {
   try {
+    const clientIp =
+      (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() ||
+      req.socket.remoteAddress ||
+      'unknown';
+
+    const rateCheck = checkOrderRateLimit(clientIp);
+    if (!rateCheck.allowed) {
+      return res.status(429).json({ error: rateCheck.error });
+    }
+
     const {
       customerName,
       customerPhone,
+      customerEmail,
       deliveryType,
       deliveryAddress,
       addressDirections,
       orderNote,
       items,
       paymentMethod,
+      websiteUrl,
     } = req.body;
 
     const validation = validateCustomerInfo(
       customerName,
       customerPhone,
       deliveryType,
-      deliveryAddress
+      deliveryAddress,
+      customerEmail,
+      websiteUrl
     );
     if (!validation.isValid) {
       return res.status(400).json({ error: validation.error });
@@ -118,6 +133,7 @@ app.post('/api/orders', async (req, res) => {
       id: orderId,
       customerName: customerName.trim(),
       customerPhone: customerPhone.trim(),
+      customerEmail: customerEmail && String(customerEmail).trim() ? String(customerEmail).trim() : undefined,
       deliveryType,
       deliveryAddress: deliveryAddress ? deliveryAddress.trim() : '',
       addressDirections: addressDirections ? addressDirections.trim() : '',
@@ -142,10 +158,12 @@ app.post('/api/orders', async (req, res) => {
     // Save order in persistent database
     const savedOrder = db.createOrder(newOrder);
 
-    // Asynchronously dispatch email notification (doesn't block client response)
-    sendOrderNotificationEmail(savedOrder).catch((err) => {
-      console.error('Async email notification error:', err);
-    });
+    // Dispatch Resend email notifications (owner + customer confirmation)
+    try {
+      await sendOrderNotificationEmail(savedOrder);
+    } catch (err) {
+      console.error('Email notification dispatch error:', err);
+    }
 
     res.status(201).json({
       success: true,
@@ -603,7 +621,12 @@ async function startServer() {
   });
 }
 
-startServer().catch((err) => {
-  console.error('[FATAL] Server startup failed:', err);
-  process.exit(1);
-});
+if (!process.env.VERCEL) {
+  startServer().catch((err) => {
+    console.error('[FATAL] Server startup failed:', err);
+    process.exit(1);
+  });
+}
+
+export { app };
+export default app;

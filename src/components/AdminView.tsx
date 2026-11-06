@@ -1509,7 +1509,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
 
                       {/* Center: Customer & Items */}
                       <div className="flex-1 flex flex-col gap-2">
-                        <div className="flex items-center gap-3">
+                        <div className="flex flex-wrap items-center gap-3">
                           <strong className="text-sm font-bold text-[#151D18]">
                             {order.customerName}
                           </strong>
@@ -1519,6 +1519,14 @@ export const AdminView: React.FC<AdminViewProps> = ({
                           >
                             {order.customerPhone}
                           </a>
+                          {order.customerEmail && (
+                            <a
+                              href={`mailto:${order.customerEmail}`}
+                              className="text-xs text-[#40493E] bg-slate-100 hover:bg-slate-200 px-2 py-0.5 rounded-md font-medium transition-colors"
+                            >
+                              {order.customerEmail}
+                            </a>
+                          )}
                           <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 text-[#40493E]">
                             {order.deliveryType === 'delivery' ? 'Paket Servis' : 'Gel-Al'}
                           </span>

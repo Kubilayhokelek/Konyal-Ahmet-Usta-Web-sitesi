@@ -1,7 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/((?!assets/|uploads/|logo\\.png).*)",
+      "source": "/api/(.*)",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/((?!api/|assets/|uploads/|logo\\.png).*)",
       "destination": "/index.html"
     }
   ]

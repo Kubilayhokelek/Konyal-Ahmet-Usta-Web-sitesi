@@ -21,23 +21,65 @@ export function generateOrderNumber(): string {
   return `KNY-${num}`;
 }
 
+// Simple in-memory IP rate limiter to prevent spam and fake order floods
+const ipOrderTimestamps = new Map<string, number[]>();
+
+export function checkOrderRateLimit(ip: string): { allowed: boolean; error?: string } {
+  const now = Date.now();
+  const windowMs = 2 * 60 * 1000; // 2 minutes
+  const maxOrdersPerWindow = 8;
+
+  const key = ip || 'unknown';
+  const recent = (ipOrderTimestamps.get(key) || []).filter((ts) => now - ts < windowMs);
+
+  if (recent.length >= maxOrdersPerWindow) {
+    return {
+      allowed: false,
+      error: 'Çok fazla sipariş isteği gönderildi. Lütfen birkaç dakika bekleyip tekrar deneyiniz.',
+    };
+  }
+
+  recent.push(now);
+  ipOrderTimestamps.set(key, recent);
+  return { allowed: true };
+}
+
 export function validateCustomerInfo(
   name: string,
   phone: string,
   deliveryType: DeliveryType,
-  address: string
+  address: string,
+  email?: string,
+  honeypot?: string
 ): { isValid: boolean; error?: string } {
-  if (!name || name.trim().length < 2) {
+  // Honeypot spam protection: bots fill hidden fields
+  if (honeypot && String(honeypot).trim().length > 0) {
+    return { isValid: false, error: 'Güvenlik doğrulaması başarısız oldu.' };
+  }
+
+  if (!name || name.trim().length < 2 || name.trim().length > 100) {
     return { isValid: false, error: 'Lütfen geçerli bir ad ve soyad giriniz.' };
   }
-  
-  const cleanedPhone = phone.replace(/\D/g, '');
-  if (cleanedPhone.length < 10) {
+
+  const cleanedPhone = String(phone || '').replace(/\D/g, '');
+  if (cleanedPhone.length < 10 || cleanedPhone.length > 15) {
     return { isValid: false, error: 'Lütfen geçerli bir telefon numarası giriniz (en az 10 hane).' };
   }
 
+  // Reject obvious fake repeating digits (e.g., 1111111111)
+  if (/^(\d)\1{9,}$/.test(cleanedPhone)) {
+    return { isValid: false, error: 'Lütfen gerçek ve aktif bir telefon numarası giriniz.' };
+  }
+
+  if (email && email.trim().length > 0) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      return { isValid: false, error: 'Lütfen geçerli bir e-posta adresi giriniz.' };
+    }
+  }
+
   if (deliveryType === 'delivery') {
-    if (!address || address.trim().length < 5) {
+    if (!address || address.trim().length < 5 || address.trim().length > 500) {
       return { isValid: false, error: 'Paket servis için lütfen açık teslimat adresinizi eksiksiz giriniz.' };
     }
   }

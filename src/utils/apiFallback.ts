@@ -361,7 +361,9 @@ function buildEmailHtml(order: Order, settings: RestaurantSettings): string {
     order.id
   }</div></div><div style="padding:20px;"><p><strong>Müşteri:</strong> ${
     order.customerName
-  } (${order.customerPhone})</p><p><strong>Teslimat:</strong> ${
+  } (${order.customerPhone})${
+    order.customerEmail ? ` • ${order.customerEmail}` : ''
+  }</p><p><strong>Teslimat:</strong> ${
     order.deliveryType === 'delivery' ? order.deliveryAddress : 'Restorandan Gel-Al'
   }</p>${
     order.orderNote ? `<p><strong>Not:</strong> "${order.orderNote}"</p>` : ''
@@ -437,6 +439,7 @@ async function handleClientSideApi(urlStr: string, init?: RequestInit): Promise<
     const {
       customerName,
       customerPhone,
+      customerEmail,
       deliveryType,
       deliveryAddress,
       addressDirections,
@@ -467,6 +470,7 @@ async function handleClientSideApi(urlStr: string, init?: RequestInit): Promise<
       id: `KNY-${Math.floor(10000 + Math.random() * 90000)}`,
       customerName: String(customerName || '').trim(),
       customerPhone: String(customerPhone || '').trim(),
+      customerEmail: customerEmail ? String(customerEmail).trim() : undefined,
       deliveryType: deliveryType === 'takeaway' ? 'takeaway' : 'delivery',
       deliveryAddress: deliveryType === 'delivery' ? String(deliveryAddress || '').trim() : '',
       addressDirections: addressDirections ? String(addressDirections).trim() : undefined,

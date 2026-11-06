@@ -53,6 +53,7 @@ export interface Order {
   id: string;
   customerName: string;
   customerPhone: string;
+  customerEmail?: string;
   deliveryType: DeliveryType;
   deliveryAddress: string;
   addressDirections?: string;
